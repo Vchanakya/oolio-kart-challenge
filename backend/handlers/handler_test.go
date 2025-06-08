@@ -1,6 +1,7 @@
 package main
 
 import (
+
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -22,4 +23,5 @@ func TestListProducts(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("expected status 200, got %d", rec.Code)
 	}
+
 }

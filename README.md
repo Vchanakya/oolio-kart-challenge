@@ -98,6 +98,7 @@ go run ./...
 
 Tests can be executed with `go test ./...`, though fetching dependencies may require network access.
 
+
 ## Frontend Setup
 
 The `frontend` folder contains a Vite + React project using Mantine.
@@ -110,3 +111,4 @@ npm run dev
 ```
 
 Run unit tests with `npm test` (requires dependencies).
+
