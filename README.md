@@ -86,3 +86,27 @@ _By following these guidelines, you should be able to build a functional and vis
 - Figma design file: [design.fig](./design.fig)
 - Red Hat Text font: https://fonts.google.com/specimen/Red+Hat+Text
 
+
+## Backend Setup
+
+The `backend` folder contains a Go project using Echo and MongoDB. To run it locally:
+
+```bash
+cd backend
+go run ./...
+```
+
+Tests can be executed with `go test ./...`, though fetching dependencies may require network access.
+
+## Frontend Setup
+
+The `frontend` folder contains a Vite + React project using Mantine.
+To run it locally:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Run unit tests with `npm test` (requires dependencies).
