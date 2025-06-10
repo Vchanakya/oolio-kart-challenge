@@ -28,6 +28,7 @@ A Go-based backend service for handling e-commerce operations, including product
 backend/
 ├── cmd/              # Main application entry point
 │   └── main.go       # Application startup code
+├── coupons/          # Coupons files
 ├── db/               # Database connection and configuration
 │   └── db.go         # MongoDB connection
 ├── internal/         # Internal packages
