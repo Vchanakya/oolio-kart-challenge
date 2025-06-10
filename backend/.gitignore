@@ -1,0 +1,74 @@
+# -----------------------------------------------------------------------------
+# 🐹  Go build artifacts
+# -----------------------------------------------------------------------------
+/bin/                       # go build -o bin/
+*.exe                       # Windows binaries
+*.exe~                      # Backup executables
+*.dll
+*.so
+*.dylib
+*.test                      # `go test` binaries
+*.out                       # misc build/test output
+*.prof                      # pprof profiles
+*.cov                       # coverage profiles
+coverage*.out
+
+# Go module cache & vendor (uncomment vendor/ if you vendor deps)
+# /vendor/
+
+# Run-time & debug
+debug/
+race*.out
+
+# -----------------------------------------------------------------------------
+# 📦  Dependency / code-gen output
+# -----------------------------------------------------------------------------
+# OpenAPI stubs or protobufs into /gen, ignore them:
+/gen/
+/generated/
+
+# -----------------------------------------------------------------------------
+# 📂  IDE & editor settings
+# -----------------------------------------------------------------------------
+.idea/                      # JetBrains
+.vscode/                    # VS Code
+*.sw?                       # vim swap files
+*.suo *.ntvs* *.njsproj *.sln # VS / VS Code project artifacts
+
+# -----------------------------------------------------------------------------
+# 🔧  Dev tooling
+# -----------------------------------------------------------------------------
+*.log                       # Logs
+.env*                       # dotenv files (.env, .env.local, etc.)
+*.local                     # local config overrides
+*.tfstate*                  # Terraform state (if any)
+
+# -----------------------------------------------------------------------------
+# 🖥️  OS cruft
+# -----------------------------------------------------------------------------
+.DS_Store                   # macOS
+.DS_Store?
+Thumbs.db                   # Windows
+ehthumbs.db
+Icon?
+**/__MACOSX/                # macOS resource forks
+
+# -----------------------------------------------------------------------------
+# 🚢  Container & build cache
+# -----------------------------------------------------------------------------
+docker-compose.override.yml # local-only overrides
+*.pid                       # PID files
+node_modules/               # if the backend pulls in JS tooling
+
+# -----------------------------------------------------------------------------
+# ✨  Misc temp & backup
+# -----------------------------------------------------------------------------
+*.bak
+*.tmp
+*.temp
+
+# -----------------------------------------------------------------------------
+# 📂  Coupons
+# -----------------------------------------------------------------------------
+coupons/
+
