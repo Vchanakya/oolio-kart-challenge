@@ -2,12 +2,13 @@ package utils
 
 import (
 	"bufio"
+	"bytes"
 	"compress/gzip"
 	"context"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
-	"strings"
 	"sync"
 	"sync/atomic"
 )
@@ -40,9 +41,10 @@ func HasCouponInAtLeastTwo(files []string, coupon string) bool {
 
 // scanFile streams one file line-by-line, returns true on first match.
 func scanFile(ctx context.Context, path, coupon string) bool {
-	filePath := ("coupons/" + path)
+	filePath := filepath.Join("coupons", path)
 	f, err := os.Open(filePath)
 	if err != nil {
+		fmt.Println("Error opening file:", err)
 		return false
 	}
 	defer f.Close()
@@ -51,6 +53,7 @@ func scanFile(ctx context.Context, path, coupon string) bool {
 	if filepath.Ext(path) == ".gz" {
 		gr, err := gzip.NewReader(f)
 		if err != nil {
+			fmt.Println("Error opening gzip reader:", err)
 			return false
 		}
 		defer gr.Close()
@@ -59,18 +62,31 @@ func scanFile(ctx context.Context, path, coupon string) bool {
 
 	scanner := bufio.NewScanner(r)
 	const maxCap = 4 * 1024 * 1024 // allow very long lines (4 MB)
-	scanner.Buffer(make([]byte, 64*1024), maxCap)
+	scanner.Buffer(make([]byte, 4*1024), maxCap)
 
-	capitals := strings.ToUpper(coupon)
+	couponBytes := []byte(coupon)
+	checkInterval := 100 // Check context every 100 lines
+	lineCount := 0
+
 	for scanner.Scan() {
-		select {
-		case <-ctx.Done(): // another goroutine already found two matches
-			return false
-		default:
+		if lineCount%checkInterval == 0 {
+			select {
+			case <-ctx.Done(): // Another goroutine found matches
+				return false
+			default:
+			}
 		}
-		if strings.ToUpper(scanner.Text()) == capitals {
+		lineCount++
+
+		if bytes.EqualFold(scanner.Bytes(), couponBytes) {
 			return true
 		}
 	}
-	return false // end-of-file or scanner error
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error scanning file:", err)
+		return false
+	}
+
+	return false // End-of-file or no match
 }
