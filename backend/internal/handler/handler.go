@@ -16,6 +16,8 @@ type Handler struct {
 	repo   repository.Repository
 }
 
+var couponBaseFiles = []string{"couponbase1.gz", "couponbase2.gz", "couponbase3.gz"}
+
 func NewHandler(server *api.Server, repo repository.Repository) *Handler {
 	return &Handler{
 		server: server,
@@ -72,7 +74,7 @@ func (h *Handler) PlaceOrder(ctx context.Context, req api.OptOrderReq) (api.Plac
 		if len(reqOrder.GetCouponCode().Value) < 8 || len(reqOrder.GetCouponCode().Value) > 10 {
 			return nil, fmt.Errorf("invalid coupon code")
 		}
-		if !utils.HasCouponInAtLeastTwo([]string{"couponbase1.gz", "couponbase2.gz", "couponbase3.gz"}, reqOrder.GetCouponCode().Value) {
+		if !utils.HasCouponInAtLeastTwo(couponBaseFiles, reqOrder.GetCouponCode().Value) {
 			return nil, fmt.Errorf("invalid coupon code")
 		}
 	}
